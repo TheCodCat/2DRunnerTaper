@@ -9,7 +9,8 @@ public class UIInputService : MonoBehaviour, IService
 {
 	[SerializeField] private TMP_Text coinViewText;
 	[SerializeField] private Transform restartButton;
-	[SerializeField] protected AnimationPanel animationPanel;
+	[SerializeField] private AnimationPanel animationPanel;
+	[SerializeField] private AudioSource audioSource;
 
 	private GameState gameState = GameState.Pause;
 
@@ -30,14 +31,18 @@ public class UIInputService : MonoBehaviour, IService
 		StartCoroutine(StartChangeGame(transform));
 	}
 
-	public void RestartCurrentScene()
+	public void RestartCurrentScene(RectTransform button)
 	{
-		StartCoroutine(RestartScene());
+		StartCoroutine(RestartScene(button));
 	}
 
-	private IEnumerator RestartScene()
+	private IEnumerator RestartScene(RectTransform transform)
 	{
-		yield return animationPanel.ClocePanel(); 
+		var tween = transform.DORotate(new Vector3(0,0, -360), 0.5f,RotateMode.FastBeyond360)
+			.SetEase(Ease.InOutBack);
+		yield return tween.WaitForCompletion();
+
+		yield return animationPanel.ClocePanel();
 
 		ServiceLocator.Current.Get<SceneManagerService>().Restart();
 	}
@@ -67,6 +72,24 @@ public class UIInputService : MonoBehaviour, IService
 
 	private void ChnageCountCoin(int value)
 	{
+		StartCoroutine(TextScaler(value));
+	}
+
+	private IEnumerator TextScaler(int value)
+	{
 		coinViewText.text = value.ToString();
+
+		var anim = DOTween.Sequence();
+		anim.Append(coinViewText.rectTransform.DOScale(1.2f, 0.1f).SetEase(Ease.InOutBack))
+			.Append(coinViewText.rectTransform.DOScale(1f, 0.1f).SetEase(Ease.InOutBack));
+
+		yield return anim.WaitForCompletion();
+
+	}
+
+	public void PlayAudioSoundButton(AudioClip audioClip)
+	{
+		audioSource.clip = audioClip;
+		audioSource.Play();
 	}
 }

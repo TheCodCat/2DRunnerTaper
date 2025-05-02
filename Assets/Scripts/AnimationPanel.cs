@@ -1,11 +1,15 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class AnimationPanel : MonoBehaviour
 {
-	[SerializeField] private RectTransform rightPanel;
-	[SerializeField] private RectTransform leftPanel;
+	[SerializeField] private AudioClip clipOpen;
+	[SerializeField] private AudioClip clipClose;
+	[SerializeField] private Image rightPanel;
+	[SerializeField] private Image leftPanel;
+	[SerializeField] private Ease ease;
 
 	private void Start()
 	{
@@ -15,9 +19,8 @@ public class AnimationPanel : MonoBehaviour
 	private IEnumerator StartLoadPanel()
 	{
 		var anim = DOTween.Sequence();
-
-		anim.Append(rightPanel.DOAnchorPosX(540, 2f).SetEase(Ease.InBounce))
-			.Join(leftPanel.DOAnchorPosX(-540, 2f).SetEase(Ease.InBounce));
+		anim.Append(rightPanel.DOFillAmount(0, 1.5f).SetEase(ease))
+			.Join(leftPanel.DOFillAmount(0, 1.5f).SetEase(ease));
 		yield return anim.WaitForCompletion();
 	}
 
@@ -25,8 +28,8 @@ public class AnimationPanel : MonoBehaviour
 	{
 		var anim = DOTween.Sequence();
 
-		 return anim.Append(rightPanel.DOAnchorPosX(0, 2f).SetEase(Ease.InBounce))
-			.Join(leftPanel.DOAnchorPosX(0, 2f).SetEase(Ease.InBounce))
+		 return anim.Append(rightPanel.DOFillAmount(1, 2f).SetEase(ease))
+			.Join(leftPanel.DOFillAmount(1, 2f).SetEase(ease))
 			.WaitForCompletion();
 	}
 }

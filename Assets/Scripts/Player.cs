@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
 	[SerializeField] private int coin;
 	[SerializeField] private ParticleSystem ParticleSystem;
 	[SerializeField] private Transform skin;
+	[Header("Звук")]
+	[SerializeField] private AudioSource source;
+	[SerializeField] private AudioClip fallClip;
+	[SerializeField] private AudioClip addClip;
 	public int Coin
 	{
 		get { return coin; }
@@ -26,9 +30,13 @@ public class Player : MonoBehaviour
 			if(component.Action == PlayerActionEnum.AddCoin)
 			{
 				Coin++;
+
+				source.pitch = UnityEngine.Random.Range(0.95f, 1.05f);
+				source.clip = addClip;
 			}
 		}
 	}
+
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.TryGetComponent(out ItemTrigger component))
@@ -46,6 +54,11 @@ public class Player : MonoBehaviour
 	{
 		Tween tween = skin.DOScale(0,0.2f);
 		yield return null;
+
 		ParticleSystem.Play();
+
+		source.pitch = 1;
+		source.clip = fallClip;
+		source.Play();
 	}
 }
