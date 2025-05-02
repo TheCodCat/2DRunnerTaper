@@ -9,8 +9,10 @@ public class UIInputService : MonoBehaviour, IService
 {
 	[SerializeField] private TMP_Text coinViewText;
 	[SerializeField] private Transform restartButton;
+	[SerializeField] protected AnimationPanel animationPanel;
 
 	private GameState gameState = GameState.Pause;
+
 	private void OnEnable()
 	{
 		Player.ChangeCoin += ChnageCountCoin;
@@ -30,12 +32,19 @@ public class UIInputService : MonoBehaviour, IService
 
 	public void RestartCurrentScene()
 	{
+		StartCoroutine(RestartScene());
+	}
+
+	private IEnumerator RestartScene()
+	{
+		yield return animationPanel.ClocePanel(); 
+
 		ServiceLocator.Current.Get<SceneManagerService>().Restart();
 	}
 
 	private IEnumerator StartChangeGame(Transform transform)
 	{
-		Tween tween = transform.DOScale(0, 0.2f);
+		Tween tween = transform.DOScale(0, 0.5f).SetEase(ease: Ease.InOutBack);
 		yield return tween.WaitForCompletion();
 
 		GameSettingsService.Instance.GameSettings.GameState = Assets.Scripts.enums.GameState.Game;
@@ -52,7 +61,7 @@ public class UIInputService : MonoBehaviour, IService
 	private IEnumerator RestartState()
 	{
 		restartButton.gameObject.SetActive(true);
-		Tween tween = restartButton.DOScale(1f, 0.2f);
+		Tween tween = restartButton.DOScale(1f, 0.2f).SetEase( ease: Ease.InOutBack );
 		yield return tween.WaitForCompletion();
 	}
 

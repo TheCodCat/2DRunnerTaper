@@ -44,9 +44,8 @@ public class Player : MonoBehaviour
 
 	private IEnumerator FallGamePlayer()
 	{
-		Tween tween = skin.DOScale(0,0.5f);
-		yield return null
-			;
+		Tween tween = skin.DOScale(0,0.2f);
+		yield return null;
 		ParticleSystem.Play();
 	}
 }
