@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
 
 				source.pitch = UnityEngine.Random.Range(0.95f, 1.05f);
 				source.clip = addClip;
+				source.Play();
 			}
 		}
 	}
