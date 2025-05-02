@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dffca821f764b8844b551d244063cc6a, type: 3}
   m_Name: DefaultSettings
   m_EditorClassIdentifier: 
-  gameState: 1
-  indexGame: 3
+  gameState: 0
+  indexGame: 0
   AddOfCurrentDelay:
   - NecessaryCoint: 0
     ReduceDelay: 2

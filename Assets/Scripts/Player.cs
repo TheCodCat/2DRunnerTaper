@@ -1,10 +1,14 @@
+using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
 	public static Action<int> ChangeCoin;
 	[SerializeField] private int coin;
+	[SerializeField] private ParticleSystem ParticleSystem;
+	[SerializeField] private Transform skin;
 	public int Coin
 	{
 		get { return coin; }
@@ -23,10 +27,26 @@ public class Player : MonoBehaviour
 			{
 				Coin++;
 			}
-			else if (component.Action == PlayerActionEnum.Dead)
+		}
+	}
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.TryGetComponent(out ItemTrigger component))
+		{
+			if (component.Action == PlayerActionEnum.Dead)
 			{
-				ServiceLocator.Current.Get<SceneManagerService>().Restart();
+				GameSettingsService.Instance.GameSettings.GameState = Assets.Scripts.enums.GameState.Pause;
+				StartCoroutine(FallGamePlayer());
+				//ServiceLocator.Current.Get<SceneManagerService>().Restart();
 			}
 		}
+	}
+
+	private IEnumerator FallGamePlayer()
+	{
+		Tween tween = skin.DOScale(0,0.5f);
+		yield return null
+			;
+		ParticleSystem.Play();
 	}
 }

@@ -21,11 +21,16 @@ public class Item : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		rigidbody2D.velocity = Vector2.down * speed;
-
-		if(transform.position.y <= -5)
+		if(GameSettingsService.Instance.GameSettings.GameState == Assets.Scripts.enums.GameState.Pause)
+			rigidbody2D.velocity = Vector2.zero;
+		else
 		{
-			Action?.Invoke(this);
+			rigidbody2D.velocity = Vector2.down * speed;
+
+			if(transform.position.y <= -5)
+			{
+				Action?.Invoke(this);
+			}
 		}
 	}
 }
