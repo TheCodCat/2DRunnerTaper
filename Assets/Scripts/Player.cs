@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 			{
 				Coin++;
 
-				source.pitch = UnityEngine.Random.Range(0.95f, 1.05f);
+				source.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
 				source.clip = addClip;
 				source.Play();
 			}

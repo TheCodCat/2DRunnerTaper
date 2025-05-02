@@ -1399,6 +1399,7 @@ GameObject:
   - component: {fileID: 1541311124}
   - component: {fileID: 1541311126}
   - component: {fileID: 1541311127}
+  - component: {fileID: 1541311128}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1485,6 +1486,7 @@ MonoBehaviour:
   coin: 0
   ParticleSystem: {fileID: 2123737471}
   skin: {fileID: 812538343}
+  source: {fileID: 1541311127}
   fallClip: {fileID: 8300000, guid: 1d0cd06f1a228cf49ad282508fca8864, type: 3}
   addClip: {fileID: 8300000, guid: 215698a452a880a46960ca1b4bc40848, type: 3}
 --- !u!82 &1541311127
@@ -1498,7 +1500,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1583,6 +1585,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!164 &1541311128
+AudioReverbFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541311122}
+  m_Enabled: 1
+  m_DryLevel: 0
+  m_Room: -1000
+  m_RoomHF: -1200
+  m_DecayTime: 1.49
+  m_DecayHFRatio: 0.54
+  m_ReflectionsLevel: -370
+  m_ReverbLevel: 1030
+  m_ReverbDelay: 0.011
+  m_Diffusion: 100
+  m_Density: 60
+  m_HFReference: 5000
+  m_RoomLF: 0
+  m_LFReference: 250
+  m_ReflectionsDelay: 0
+  m_ReverbPreset: 4
 --- !u!1 &1557156436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,7 +2684,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5408,10 +5433,10 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
-    collisionMode: 0
+    type: 1
+    collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
